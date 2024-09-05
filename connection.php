@@ -81,7 +81,7 @@ if(is_null($out)) $out = "NULL";
 if(strlen($out) == 0) $out = "NULL";
 if($out=="\n") $out = "NULL";
 if($out=="\r") $out = "NULL";
-$limit = 999;
+$limit = 1000000;
 if(strlen($out) > $limit) $out = substr($out, 0, $limit);
 
 // 出力も記録
@@ -93,7 +93,7 @@ $cmd_image = str_replace(PHP_EOL, "", $cmd_image);
 $output_image_base64 = shell_exec("$cmd_image");
 
 // 画像も記録
-file_put_contents($filename_log, "output image : ".str_replace(array("\r\n", "\r", "\n"), ' ', $output_image_base64)."\n", FILE_APPEND);
+// file_put_contents($filename_log, "output image : ".str_replace(array("\r\n", "\r", "\n"), ' ', $output_image_base64)."\n", FILE_APPEND);
 
 // コンテナを削除
 $cmd3 = "sudo docker rm -f $cid";
