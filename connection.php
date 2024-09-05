@@ -92,6 +92,9 @@ $cmd_image = "sudo docker exec $cid /bin/bash -c 'base64 media/output.jpg'";
 $cmd_image = str_replace(PHP_EOL, "", $cmd_image);
 $output_image_base64 = shell_exec("$cmd_image");
 
+// 画像も記録
+file_put_contents($filename_log, "output image : ".str_replace(array("\r\n", "\r", "\n"), ' ', $output_image_base64)."\n", FILE_APPEND);
+
 // コンテナを削除
 $cmd3 = "sudo docker rm -f $cid";
 $cmd3 = str_replace(PHP_EOL, "", $cmd3);
