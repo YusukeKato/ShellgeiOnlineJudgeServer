@@ -15,6 +15,7 @@ if($time_diff->s < 3) {
   $res['shellgei'] = "The server is busy.";
   $res['shellgei_id'] = "-1";
   $res['shellgei_date'] = $shellgei_newtime;
+  $res['shellgei_image'] = "";
   echo json_encode($res);
   exit();
 }
@@ -68,9 +69,9 @@ $cmd1 = str_replace(PHP_EOL, "", $cmd1);
 shell_exec("$cmd1");
 
 // 画像を作成しておく
-$cmd_tmp_image = "sudo docker exec $cid /bin/bash -c 'convert -size 200x200 xc:white media/output.jpg'";
+$cmd_tmp_image = "sudo docker exec $cid /bin/bash -c 'convert -size 200x200 xc:black media/output.jpg'";
 $cmd_tmp_image = str_replace(PHP_EOL, "", $cmd_tmp_image);
-$output_image_base64 = shell_exec("$cmd_tmp_image");
+shell_exec("$cmd_tmp_image");
 
 // シェル芸を実行して結果を取得
 $cmd2 = "timeout 3 python3 ../run_shellgei.py $cid 2>&1";
@@ -78,6 +79,8 @@ $cmd2 = str_replace(PHP_EOL, "", $cmd2);
 $out = shell_exec("$cmd2");
 if(is_null($out)) $out = "NULL";
 if(strlen($out) == 0) $out = "NULL";
+if($out=="\n") $out = "NULL";
+if($out=="\r") $out = "NULL";
 $limit = 999;
 if(strlen($out) > $limit) $out = substr($out, 0, $limit);
 
