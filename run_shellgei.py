@@ -15,7 +15,7 @@ async def main(cid):
 
 @timeout_decorator.timeout(3)
 async def shellgei(cid):
-  result = subprocess.run(['sudo', 'docker', 'exec', '--user', '1000', cid, '/bin/bash', '-c','./z.bash'], encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  result = subprocess.run(['sudo', 'docker', 'exec', cid, '/bin/bash', '-c','./z.bash'], encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
   return result.stdout
 
 args = sys.argv

@@ -24,7 +24,7 @@ file_put_contents($filename_time, $shellgei_newtime, LOCK_EX);
 $data = str_replace('\r', '', $data);
 $num = str_replace('\r', '', $num);
 
-// 実行したシェル芸のID
+// 実行したシェル芸のIDを取得
 $filename_id = '../shellgei_id.txt';
 $shellgei_id_str = file_get_contents($filename_id);
 $shellgei_id = (int) $shellgei_id_str;
@@ -42,7 +42,7 @@ file_put_contents($filename_log, "date : ".$datetime."\n", FILE_APPEND);
 file_put_contents($filename_log, "num : ".$num."\n", FILE_APPEND);
 file_put_contents($filename_log, "cmd : ".str_replace(array("\r\n", "\r", "\n"), ' ', $data)."\n", FILE_APPEND);
 
-// コマンドをファイルに書き込み
+// コマンドを実行ファイルに書き込み
 $filename_z = '../z.bash';
 file_put_contents($filename_z, $data);
 
@@ -52,7 +52,7 @@ $str = str_replace("\r", "", $str);
 file_put_contents($filename_z, $str);
 
 // dockerのコンテナを起動
-shell_exec("sudo docker run -u ubuntu -dit --rm --ipc=none --network=none theoldmoon0602/shellgeibot");
+shell_exec("sudo docker run -dit --rm --ipc=none --network=none theoldmoon0602/shellgeibot");
 
 // コンテナのIDを取得
 $cid = shell_exec("sudo docker ps | awk 'NR==2{print $1}'");
@@ -67,6 +67,11 @@ $cmd1 = "sudo docker cp $filename_z $cid:/";
 $cmd1 = str_replace(PHP_EOL, "", $cmd1);
 shell_exec("$cmd1");
 
+// 画像を作成しておく
+$cmd_tmp_image = "sudo docker exec $cid /bin/bash -c 'convert -size 10x10 xc:white media/output.jpg'";
+$cmd_tmp_image = str_replace(PHP_EOL, "", $cmd_tmp_image);
+$output_image_base64 = shell_exec("$cmd_tmp_image");
+
 // シェル芸を実行して結果を取得
 $cmd2 = "timeout 3 python3 ../run_shellgei.py $cid 2>&1";
 $cmd2 = str_replace(PHP_EOL, "", $cmd2);
@@ -79,6 +84,11 @@ if(strlen($out) > $limit) $out = substr($out, 0, $limit);
 // 出力も記録
 file_put_contents($filename_log, "output : ".str_replace(array("\r\n", "\r", "\n"), ' ', $out)."\n", FILE_APPEND);
 
+// 画像があれば文字列として取得（Base64で変換）
+$cmd_image = "sudo docker exec $cid /bin/bash -c 'base64 media/output.jpg'";
+$cmd_image = str_replace(PHP_EOL, "", $cmd_image);
+$output_image_base64 = shell_exec("$cmd_image");
+
 // コンテナを削除
 $cmd3 = "sudo docker rm -f $cid";
 $cmd3 = str_replace(PHP_EOL, "", $cmd3);
@@ -88,4 +98,5 @@ shell_exec("$cmd3");
 $res['shellgei'] = $out;
 $res['shellgei_id'] = $shellgei_id_str;
 $res['shellgei_date'] = $datetime;
+$res['shellgei_image'] = $output_image_base64;
 echo json_encode($res);
