@@ -88,7 +88,7 @@ if(strlen($out) > $limit) $out = substr($out, 0, $limit);
 file_put_contents($filename_log, "output : ".str_replace(array("\r\n", "\r", "\n"), ' ', $out)."\n", FILE_APPEND);
 
 // 画像を取得（Base64で変換）
-$cmd_image = "sudo docker exec $cid /bin/bash -c 'base64 media/output.jpg'";
+$cmd_image = "sudo docker exec $cid /bin/bash -c 'base64 -w 0 media/output.jpg'";
 $cmd_image = str_replace(PHP_EOL, "", $cmd_image);
 $output_image_base64 = shell_exec("$cmd_image");
 
