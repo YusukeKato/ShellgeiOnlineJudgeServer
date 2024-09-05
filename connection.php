@@ -76,15 +76,15 @@ $output_image_base64 = shell_exec("$cmd_tmp_image");
 $cmd2 = "timeout 3 python3 ../run_shellgei.py $cid 2>&1";
 $cmd2 = str_replace(PHP_EOL, "", $cmd2);
 $out = shell_exec("$cmd2");
-if(is_null($out)) $out = "null";
-if(strlen($out) == 0) $out = "null";
+if(is_null($out)) $out = "NULL";
+if(strlen($out) == 0) $out = "NULL";
 $limit = 999;
 if(strlen($out) > $limit) $out = substr($out, 0, $limit);
 
 // 出力も記録
 file_put_contents($filename_log, "output : ".str_replace(array("\r\n", "\r", "\n"), ' ', $out)."\n", FILE_APPEND);
 
-// 画像があれば文字列として取得（Base64で変換）
+// 画像を取得（Base64で変換）
 $cmd_image = "sudo docker exec $cid /bin/bash -c 'base64 media/output.jpg'";
 $cmd_image = str_replace(PHP_EOL, "", $cmd_image);
 $output_image_base64 = shell_exec("$cmd_image");
