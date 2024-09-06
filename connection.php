@@ -11,7 +11,7 @@ $shellgei_newtime = date('Y-m-d H:i:s');
 $time_old = new DateTime($shellgei_oldtime);
 $time_new = new DateTime($shellgei_newtime);
 $time_diff = $time_old->diff($time_new);
-if($time_diff->s < 3) {
+if($time_diff->s < 5) {
   $res['shellgei'] = "The server is busy.";
   $res['shellgei_id'] = "-1";
   $res['shellgei_date'] = $shellgei_newtime;
