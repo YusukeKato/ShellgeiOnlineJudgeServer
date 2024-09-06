@@ -69,7 +69,7 @@ $cmd1 = str_replace(PHP_EOL, "", $cmd1);
 shell_exec("$cmd1");
 
 // 画像を作成しておく
-$cmd_tmp_image = "sudo docker exec $cid /bin/bash -c 'convert -size 200x200 xc:black media/output.jpg'";
+$cmd_tmp_image = "sudo docker exec $cid /bin/bash -c 'convert -size 200x200 xc:white media/output.jpg'";
 $cmd_tmp_image = str_replace(PHP_EOL, "", $cmd_tmp_image);
 shell_exec("$cmd_tmp_image");
 
