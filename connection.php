@@ -106,7 +106,9 @@ $answer_file = file_get_contents($answer_file_path);
 $cmd_answer_image = "base64 -w 0 ./problem_images/$num.jpg";
 $cmd_answer_image = str_replace(PHP_EOL, "", $cmd_answer_image);
 $answer_image_base64 = shell_exec("$cmd_answer_image");
-$judge_result = "python3 ../judge.py $out $output_image_base64 $answer_file $answer_image_base64 2>&1";
+$cmd_judge_result = "python3 ../judge.py $out $output_image_base64 $answer_file $answer_image_base64 2>&1";
+$cmd_judge_result = str_replace(PHP_EOL, "", $cmd_judge_result);
+$judge_result = shell_exec("$cmd_judge_result");
 
 // コマンドの実行結果を送り返す
 $res['shellgei'] = $out;
