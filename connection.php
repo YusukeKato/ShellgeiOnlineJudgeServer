@@ -100,9 +100,18 @@ $cmd3 = "sudo docker rm -f $cid";
 $cmd3 = str_replace(PHP_EOL, "", $cmd3);
 shell_exec("$cmd3");
 
+// 正誤判定
+$answer_file_path =  "./output/$num.txt";
+$answer_file = file_get_contents($answer_file_path);
+$cmd_answer_image = "base64 -w 0 ./problem_images/$num.jpg";
+$cmd_answer_image = str_replace(PHP_EOL, "", $cmd_answer_image);
+$answer_image_base64 = shell_exec("$cmd_answer_image");
+$judge_result = "python3 ../judge.py $out $output_image_base64 $answer_file $answer_image_base64 2>&1";
+
 // コマンドの実行結果を送り返す
 $res['shellgei'] = $out;
 $res['shellgei_id'] = $shellgei_id_str;
 $res['shellgei_date'] = $datetime;
 $res['shellgei_image'] = $output_image_base64;
+$res['shellgei_judge'] = $judge_result;
 echo json_encode($res);
