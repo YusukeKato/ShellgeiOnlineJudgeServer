@@ -11,11 +11,15 @@ answer_image = args[4]
 output = re.sub('\r', '', output)
 answer = re.sub('\r', '', answer)
 
-judge = "null"
-if ((output == answer or output+"\n" == answer or output+"\n\n" == answer) and output_image == answer_image):
-  judge = "true"
+judge = "0"
+if (output == answer and output_image == answer_image):
+  judge = "1"
+elif (output == answer and output_image != answer_image):
+  judge = "2"
+elif (output != answer and output_image == answer_image):
+  judge = "3"
 else:
-  judge = "false"
+  judge = "4"
 print(judge)
 
 f = open('../debug.txt', 'w', encoding='UTF-8')
