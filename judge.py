@@ -10,8 +10,8 @@ answer_image = args[4]
 
 output = re.sub('\r', '', output)
 answer = re.sub('\r', '', answer)
-output = re.sub('/9j/4AAQSkZJRgABAQAAAAAAAAD/', '', output)
-answer = re.sub('/9j/4AAQSkZJRgABAQAAAQABAAD/', '', answer)
+output_image = output_image[28:]
+answer_image = answer_image[28:]
 
 judge = "0"
 if (output == answer and output_image == answer_image):
@@ -24,12 +24,14 @@ else:
   judge = "4"
 print(judge)
 
-f = open('../debug.txt', 'w', encoding='UTF-8')
-f.write('output: '+output.replace("\n","<newline>")+'\n')
-f.write('answer: '+answer.replace("\n","<newline>")+'\n')
-f.write('output_len: '+str(len(output))+'\n')
-f.write('answer_len: '+str(len(answer))+'\n')
-f.write('output_image: '+output_image+'\n')
-f.write('answer_image: '+answer_image+'\n')
-f.write('judge: '+judge+'\n')
-f.close()
+# f = open('../debug.txt', 'w', encoding='UTF-8')
+# f.write('output: '+output.replace("\n","<newline>")+'\n')
+# f.write('answer: '+answer.replace("\n","<newline>")+'\n')
+# f.write('output_len: '+str(len(output))+'\n')
+# f.write('answer_len: '+str(len(answer))+'\n')
+# f.write('output_image: '+output_image+'\n')
+# f.write('answer_image: '+answer_image+'\n')
+# f.write('output_image_len: '+str(len(output_image))+'\n')
+# f.write('answer_image_len: '+str(len(answer_image))+'\n')
+# f.write('judge: '+judge+'\n')
+# f.close()
