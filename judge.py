@@ -15,3 +15,10 @@ if ((output == answer or output+"\n" == answer or output+"\n\n" == answer) and o
   print("true")
 else:
   print("false")
+
+f = open('debug.txt', 'w', encoding='UTF-8')
+f.write('output: '+output+'\n')
+f.write('answer: '+answer+'\n')
+f.write('output_image: '+output_image+'\n')
+f.write('answer_image: '+answer_image+'\n')
+f.close()
