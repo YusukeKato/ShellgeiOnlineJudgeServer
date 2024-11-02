@@ -10,6 +10,8 @@ answer_image = args[4]
 
 output = re.sub('\r', '', output)
 answer = re.sub('\r', '', answer)
+output = re.sub('/9j/4AAQSkZJRgABAQAAAAAAAAD/', '', output)
+answer = re.sub('/9j/4AAQSkZJRgABAQAAAQABAAD/', '', answer)
 
 judge = "0"
 if (output == answer and output_image == answer_image):
