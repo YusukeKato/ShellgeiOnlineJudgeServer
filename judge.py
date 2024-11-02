@@ -18,9 +18,11 @@ else:
   judge = "false"
 print(judge)
 
-f = open('debug.txt', 'w', encoding='UTF-8')
+f = open('../debug.txt', 'w', encoding='UTF-8')
 f.write('output: '+output.replace("\n","<newline>")+'\n')
 f.write('answer: '+answer.replace("\n","<newline>")+'\n')
+f.write('output_len: '+len(output))
+f.write('answer_len: '+len(answer))
 f.write('output_image: '+output_image+'\n')
 f.write('answer_image: '+answer_image+'\n')
 f.write('judge: '+judge+'\n')
